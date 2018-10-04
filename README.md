@@ -22,17 +22,17 @@ EOF
 docker run --rm \
   -v "$PWD":/usr/src \
   -w /usr/src \
-  jokester/alpine-jni-build \
+  zubnix/jni-cross-compilers:linux-x86_64 \
   g++ -shared -O3 -w \
     -I/usr/include \
-    -I$JAVA_HOME/include \
-    -I$JAVA_HOME/include/linux \
+    -I/usr/lib/jvm/java-8-openjdk-amd64/include \
+    -I/usr/lib/jvm/java-8-openjdk-amd64/include/linux \
     ./native/square_Square.cpp \
     -o libsquare.so
 
 docker run --rm \
   -v "$PWD":/usr/src \
   -w /usr/src \
-  jokester/alpine-jni-build \
+  zubnix/jni-cross-compilers:linux-x86_64 \
   java -cp square.jar -Djava.library.path=/usr/src square.Demo
 ```
